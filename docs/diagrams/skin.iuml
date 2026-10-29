@@ -1,0 +1,28 @@
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam roundCorner 0
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam dpi 170
+skinparam ArrowColor #000000
+skinparam ArrowThickness 1
+skinparam class {
+  BackgroundColor #7ACFF5
+  BorderColor #1F4E79
+  BorderThickness 1.3
+  FontStyle bold
+  FontName Arial
+  FontSize 13
+  AttributeFontSize 11
+  AttributeFontName Arial
+  StereotypeFontSize 10
+  StereotypeFontStyle italic
+}
+skinparam note {
+  BackgroundColor #FFFFC0
+  BorderColor #000000
+  FontSize 10
+}
+hide circle
+hide empty members
+skinparam linetype ortho

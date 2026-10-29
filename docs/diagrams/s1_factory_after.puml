@@ -1,0 +1,42 @@
+@startuml
+!include skin.iuml
+class CalculatorUI {
+  - numberCreator : ButtonCreator
+  - operatorCreator : ButtonCreator
+  - equalCreator : ButtonCreator
+  - scientificCreator : ButtonCreator
+  - createButton(creator : ButtonCreator, label : String, x : int, y : int) : JButton
+}
+abstract class ButtonCreator <<Creator>> {
+  # {static} FONT_NAME : String
+  # {static} BUTTON_WIDTH : int
+  # {static} BUTTON_HEIGHT : int
+  + create(label : String, x : int, y : int) : JButton
+  # {abstract} createButton(label : String) : JButton
+  # getButtonWidth() : int
+}
+class NumberButtonCreator {
+  # createButton(label : String) : JButton
+}
+class OperatorButtonCreator {
+  # createButton(label : String) : JButton
+}
+class EqualButtonCreator {
+  # createButton(label : String) : JButton
+  # getButtonWidth() : int
+}
+class ScientificButtonCreator {
+  # createButton(label : String) : JButton
+}
+class JButton <<Product>>
+CalculatorUI --> "4" ButtonCreator
+ButtonCreator <|-- NumberButtonCreator
+ButtonCreator <|-- OperatorButtonCreator
+ButtonCreator <|-- EqualButtonCreator
+ButtonCreator <|-- ScientificButtonCreator
+ButtonCreator ..> JButton : <<use>>
+NumberButtonCreator ..> JButton : <<create>>
+OperatorButtonCreator ..> JButton : <<create>>
+EqualButtonCreator ..> JButton : <<create>>
+ScientificButtonCreator ..> JButton : <<create>>
+@enduml

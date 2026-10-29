@@ -1,0 +1,43 @@
+@startuml
+!include skin.iuml
+class App {
+  + {static} main(args : String[]) : void
+}
+class CalculatorUI {
+  - themesMap : Map<String, Theme>
+  + CalculatorUI()
+  - applyTheme(theme : Theme) : void
+}
+class ThemeLoader <<Singleton>> {
+  - {static} THEMES_FILE : String
+  - {static} instance : ThemeLoader
+  - themes : Map<String, Theme>
+  - ThemeLoader()
+  + {static} getInstance() : ThemeLoader
+  + getThemes() : Map<String, Theme>
+  + getTheme(name : String) : Theme
+  - readThemesFromFile() : Map<String, Theme>
+}
+class ThemeList {
+  - themes : List<Theme>
+  + getThemesAsMap() : Map<String, Theme>
+}
+class Theme {
+  - name : String
+  - applicationBackground : String
+  - textColor : String
+  - ...
+}
+App ..> CalculatorUI : <<create>>
+CalculatorUI --> ThemeLoader : getInstance()
+ThemeLoader --> "1" ThemeLoader : -instance
+ThemeLoader ..> ThemeList : <<create>>
+ThemeLoader o--> "0..*" Theme : themes
+note bottom of ThemeLoader
+  if (instance == null) {
+    synchronized (ThemeLoader.class) {
+      if (instance == null) instance = new ThemeLoader();
+  } }
+  return instance;
+end note
+@enduml

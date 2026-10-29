@@ -1,0 +1,23 @@
+@startuml
+!include skin.iuml
+class CalculatorUI {
+  - {static} BUTTON_WIDTH : int = 80
+  - {static} BUTTON_HEIGHT : int = 70
+  - window : JFrame
+  - btn0 ... btn9 : JButton
+  - btnAdd, btnSub, btnMul, btnDiv, btnMod : JButton
+  - btnC, btnBack, btnPoint, btnEqual : JButton
+  - btnRoot, btnPower, btnLog : JButton
+  - initButtons(columns : int[], rows : int[]) : void
+  - createButton(label : String, x : int, y : int) : JButton
+}
+class JButton <<Swing>>
+CalculatorUI ..> JButton : <<create>>
+note bottom of CalculatorUI
+  One method builds every key the same way, then the
+  special cases are patched afterwards inside initButtons():
+    btnEqual.setSize(2 * BUTTON_WIDTH + 10, BUTTON_HEIGHT);
+    btnPower.setFont(new Font(..., 24));
+    btnRoot.setVisible(false); btnPower.setVisible(false); ...
+end note
+@enduml

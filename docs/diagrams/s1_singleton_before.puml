@@ -1,0 +1,36 @@
+@startuml
+!include skin.iuml
+class App {
+  + {static} main(args : String[]) : void
+}
+class CalculatorUI {
+  - themesMap : Map<String, Theme>
+  + CalculatorUI()
+  - initThemeSelector() : void
+  - applyTheme(theme : Theme) : void
+}
+class ThemeLoader {
+  - ThemeLoader()
+  + {static} loadThemes() : Map<String, Theme>
+}
+class ThemeList {
+  - themes : List<Theme>
+  + getThemes() : List<Theme>
+  + getThemesAsMap() : Map<String, Theme>
+}
+class Theme {
+  - name : String
+  - applicationBackground : String
+  - textColor : String
+  - ...
+}
+App ..> CalculatorUI : <<create>>
+CalculatorUI ..> ThemeLoader : <<use>>
+ThemeLoader ..> ThemeList : <<create>>
+ThemeList o--> "0..*" Theme
+note right of ThemeLoader
+  Static helper: every call to
+  loadThemes() opens and parses
+  the YAML file again.
+end note
+@enduml
