@@ -1,0 +1,38 @@
+@startuml
+!include skin.iuml
+class CalculatorUI <<Client>> {
+  - applyTheme(theme : Theme) : void
+}
+interface ColorScheme <<interface>> <<Target>> {
+  + getApplicationBackground() : Color
+  + getTextColor() : Color
+  + getEqualTextColor() : Color
+  + getOperatorBackground() : Color
+  + getNumbersBackground() : Color
+  + getEqualBackground() : Color
+}
+class ThemeColorAdapter <<Adapter>> {
+  - theme : Theme
+  + ThemeColorAdapter(theme : Theme)
+  + getApplicationBackground() : Color
+  + getTextColor() : Color
+  + getEqualTextColor() : Color
+  + getOperatorBackground() : Color
+  + getNumbersBackground() : Color
+  + getEqualBackground() : Color
+}
+class Theme <<Adaptee>> {
+  - textColor : String
+  - ...
+  + getTextColor() : String
+  + getBtnEqualTextColor() : String
+  + ...()
+}
+class ColorUtil {
+  + {static} hex2Color(colorHex : String) : Color
+}
+CalculatorUI ..> ColorScheme : <<use>>
+ColorScheme <|.. ThemeColorAdapter
+ThemeColorAdapter --> "1" Theme : -theme
+ThemeColorAdapter ..> ColorUtil : <<use>>
+@enduml

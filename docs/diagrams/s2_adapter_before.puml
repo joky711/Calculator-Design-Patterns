@@ -1,0 +1,30 @@
+@startuml
+!include skin.iuml
+class CalculatorUI {
+  - window : JFrame
+  - btn0 ... btnLog : JButton
+  - applyTheme(theme : Theme) : void
+}
+class Theme {
+  - applicationBackground : String
+  - textColor : String
+  - btnEqualTextColor : String
+  - operatorBackground : String
+  - numbersBackground : String
+  - btnEqualBackground : String
+  + getTextColor() : String
+  + ...()
+}
+class ColorUtil {
+  + {static} hex2Color(colorHex : String) : Color
+}
+class Color <<AWT>>
+CalculatorUI ..> Theme : <<use>>
+CalculatorUI ..> ColorUtil : <<use>> 51 calls
+ColorUtil ..> Color : <<create>>
+note bottom of CalculatorUI
+  The UI converts hex strings itself, e.g.
+  btn7.setForeground(hex2Color(theme.getTextColor()));
+  -> UI is coupled to the YAML string format.
+end note
+@enduml

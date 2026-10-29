@@ -1,0 +1,47 @@
+@startuml
+!include skin.iuml
+class CalculatorUI <<Client>> {
+  - root : ComponentGroup
+  - fields : ComponentGroup
+  - numberKeys : ComponentGroup
+  - operatorKeys : ComponentGroup
+  - equalKeys : ComponentGroup
+  - scientificKeys : ComponentGroup
+  - applyTheme(theme : Theme) : void
+}
+interface CalculatorComponent <<interface>> <<Component>> {
+  + applyColors(colors : ColorScheme) : void
+  + setVisible(visible : boolean) : void
+}
+class KeyComponent <<Leaf>> {
+  - button : JButton
+  - type : KeyType
+  + applyColors(colors : ColorScheme) : void
+  + setVisible(visible : boolean) : void
+}
+class FieldComponent <<Leaf>> {
+  - field : JComponent
+  + applyColors(colors : ColorScheme) : void
+  + setVisible(visible : boolean) : void
+}
+class ComponentGroup <<Composite>> {
+  - name : String
+  - children : List<CalculatorComponent>
+  + add(c : CalculatorComponent) : void
+  + remove(c : CalculatorComponent) : void
+  + getChildren() : List<CalculatorComponent>
+  + applyColors(colors : ColorScheme) : void
+  + setVisible(visible : boolean) : void
+}
+enum KeyType <<enumeration>> {
+  NUMBER
+  OPERATOR
+  EQUAL
+}
+CalculatorUI --> "1" ComponentGroup : root
+CalculatorComponent <|.. KeyComponent
+CalculatorComponent <|.. FieldComponent
+CalculatorComponent <|.. ComponentGroup
+ComponentGroup o--> "0..*" CalculatorComponent : children
+KeyComponent --> "1" KeyType
+@enduml

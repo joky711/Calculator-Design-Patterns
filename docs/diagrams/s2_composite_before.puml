@@ -1,0 +1,26 @@
+@startuml
+!include skin.iuml
+class CalculatorUI {
+  - inputScreen : JTextField
+  - comboCalculatorType : JComboBox
+  - comboTheme : JComboBox
+  - btn0, btn1, ..., btn9 : JButton
+  - btnPoint, btnC, btnBack : JButton
+  - btnAdd, btnSub, btnMul, btnDiv, btnMod : JButton
+  - btnEqual : JButton
+  - btnRoot, btnPower, btnLog : JButton
+  - initCalculatorTypeSelector() : void
+  - applyTheme(theme : Theme) : void
+}
+class JButton <<Swing>>
+class JTextField <<Swing>>
+class JComboBox <<Swing>>
+CalculatorUI --> "23" JButton
+CalculatorUI --> "1" JTextField
+CalculatorUI --> "2" JComboBox
+note bottom of CalculatorUI
+  applyTheme(): 55 lines, one setForeground/setBackground per widget.
+  Scientific mode: btnRoot / btnPower / btnLog .setVisible(...) one by one.
+  Adding a new key = edit applyTheme() and the selector again.
+end note
+@enduml
